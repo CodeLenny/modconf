@@ -1,0 +1,24 @@
+{
+  "name": "modconf",
+  "version": "0.0.0",
+  "description": "Configuration, modularized.",
+  "main": "ModConf.js",
+  "scripts": {
+    "test": "NODE_PATH=. nyc ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeLenny/modconf.git"
+  },
+  "author": "Ryan Leonard (http://ryanleonard.us)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodeLenny/modconf/issues"
+  },
+  "homepage": "https://github.com/CodeLenny/modconf#readme",
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "jsverify": "^0.8.2",
+    "nyc": "^11.0.2"
+  }
+}
