@@ -3,3 +3,10 @@ node_js:
   - 6
   - 8
   - node
+
+install:
+  - npm install codecov
+
+script:
+  - $(npm bin)/nyc report --reporter=lcovonly
+  - $(npm bin)/codecov
