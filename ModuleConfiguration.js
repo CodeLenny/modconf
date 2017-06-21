@@ -62,6 +62,15 @@ class ModuleConfiguration {
     return this;
   }
 
+  /**
+   * Produce the final configuration for this module.  Doesn't have side effects, and can be called multiple times.
+   * @param {Object} [obj] an optional set of run-time options that can override the defaults.
+   * @return {Object} the final configuration, with all defaults and overrides merged in.
+  */
+  use(obj) {
+    return merge({}, this._defaults, obj);
+  }
+
 }
 
 module.exports = ModuleConfiguration;
