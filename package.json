@@ -4,7 +4,13 @@
   "description": "Configuration, modularized.",
   "main": "ModConf.js",
   "scripts": {
-    "test": "NODE_PATH=. nyc ava"
+    "test": "NODE_PATH=. nyc --reporter=html --reporter=text ava"
+  },
+  "nyc": {
+    "exclude": [
+      "examples/**",
+      "**/test/**/*.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -20,5 +26,8 @@
     "ava": "^0.19.1",
     "jsverify": "^0.8.2",
     "nyc": "^11.0.2"
+  },
+  "dependencies": {
+    "lodash.merge": "^4.6.0"
   }
 }
