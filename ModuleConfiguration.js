@@ -19,7 +19,9 @@ class ModuleConfiguration {
     }
     this.id = id;
     this._options = {};
-    this._defaults = {};
+    this._defaults = {
+      _set: {},
+    };
   }
 
   /**
@@ -91,7 +93,22 @@ class ModuleConfiguration {
    * @return {Object} the final configuration, with all defaults and overrides merged in.
   */
   use(obj) {
-    return merge({}, this._defaults, obj);
+    return this.constructor.removeInternal(merge({}, this._defaults, obj));
+  }
+
+  /**
+   * Removes keys used by {@link ModuleConfiguration} used to store internal data from module configuration objects.
+   * Mutates the given object.
+   * @param {Object} conf the configuration object to mutate.
+   * @return {Object} the given configuration object after deleting internal keys.
+   * @throws {TypeError} if not given an object.
+  */
+  static removeInternal(obj) {
+    if(typeof obj !== "object" || Array.isArray(obj)) {
+      throw new TypeError(`Must be given an object.  Given '${typeof obj}'`);
+    }
+    delete obj._set;
+    return obj;
   }
 
 }
