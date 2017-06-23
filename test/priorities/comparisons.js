@@ -4,6 +4,7 @@ const modconf = require("ModConf");
 const priorities = [
   "option definition",
   "use object",
+  "option set",
 ];
 
 let i = 0;
@@ -17,8 +18,16 @@ function overrides(t, finalVal, earlierVal) {
     if(priority !== "option definition") { return; }
     conf.option(option, { default: val });
   }
+  function optionSet(priority, val) {
+    if(priority !== "option set") { return; }
+    let obj = {};
+    obj[option] = val;
+    conf.set(obj);
+  }
   defineOption(earlierVal, initial);
   defineOption(finalVal, final);
+  optionSet(earlierVal, initial);
+  optionSet(finalVal, final);
   const useOpts = {};
   function addUseOpt(priority, val) {
     if(priority !== "use object") { return; }
@@ -33,3 +42,6 @@ overrides.title = (title, final, earlier) => `${final} overrides ${earlier}`;
 
 test(overrides, "option definition", "option definition");
 test(overrides, "use object", "option definition");
+test(overrides, "option set", "option definition");
+test(overrides, "option set", "use object");
+test(overrides, "option set", "option set");

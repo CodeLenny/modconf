@@ -88,12 +88,39 @@ class ModuleConfiguration {
   }
 
   /**
+   * Update this module's overridden options, which are merged into the configuration after applying a runtime object.
+   * @param {String} [set] the configuration set these override properties are in.  Currently not supported.
+   * @param {Object} data extra configuration data to merge with the current override data.
+   * @throws {TypeError} if given improper arguments
+   * @throws {NotImplementedError} if `set` isn't `"default"`.
+   * @return {ModuleConfiguration} the current configuration object.  Useful for chaining.
+  */
+  set(set, data) {
+    if(!data) { [set, data] = ["default", set]; }
+    if(data === null || typeof data !== "object") {
+      throw new TypeError(`Must be given an object.  Given ${typeof data}`);
+    }
+    if(set === "default") {
+      this._defaults._set = merge({}, this._defaults._set, data);
+    }
+    else {
+      throw NotImplementedError(`'set' must be '"default"'.  Given '${set}'.`);
+    }
+    return this;
+  }
+
+  /**
    * Produce the final configuration for this module.  Doesn't have side effects, and can be called multiple times.
    * @param {Object} [obj] an optional set of run-time options that can override the defaults.
    * @return {Object} the final configuration, with all defaults and overrides merged in.
   */
   use(obj) {
-    return this.constructor.removeInternal(merge({}, this._defaults, obj));
+    return this.constructor.removeInternal(merge(...[
+      {},
+      this._defaults,
+      obj,
+      this.constructor.removeInternal(this._defaults._set),
+    ]));
   }
 
   /**
