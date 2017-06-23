@@ -1,4 +1,5 @@
 const merge = require("lodash.merge");
+const { NotImplementedError } = require("common-errors");
 
 /**
  * Handles configuration for a module or library.
@@ -59,6 +60,28 @@ class ModuleConfiguration {
     if(types) { opts.types = types; }
     this._options[name] = merge({}, this._options[name], opts);
     if(typeof opts.default !== "undefined") { this._defaults[name] = opts.default; }
+    return this;
+  }
+
+  /**
+   * Update this module's default configuration.
+   * @param {String} [set] the configuration set these defaults are in.  Currently not supported.
+   * @param {Object} data extra configuration data to merge with the current defaults.
+   * @throws {TypeError} if given improper arguments
+   * @throws {NotImplementedError} if `set` isn't `"default"`.
+   * @return {ModuleConfiguration} the current configuration object.  Useful for chaining.
+  */
+  defaults(set, data) {
+    if(!data) { [set, data] = ["default", set]; }
+    if(data === null || typeof data !== "object") {
+      throw new TypeError(`Must be given an object.  Given ${typeof data}`);
+    }
+    if(set === "default") {
+      this._defaults = merge({}, this._defaults, data);
+    }
+    else {
+      throw NotImplementedError(`'set' must be '"default"'.  Given '${set}'.`);
+    }
     return this;
   }
 
