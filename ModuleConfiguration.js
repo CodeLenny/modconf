@@ -1,4 +1,5 @@
 const merge = require("lodash.merge");
+const { NotImplementedError } = require("common-errors");
 
 /**
  * Handles configuration for a module or library.
@@ -18,7 +19,9 @@ class ModuleConfiguration {
     }
     this.id = id;
     this._options = {};
-    this._defaults = {};
+    this._defaults = {
+      _set: {},
+    };
   }
 
   /**
@@ -63,12 +66,76 @@ class ModuleConfiguration {
   }
 
   /**
+   * Update this module's default configuration.
+   * @param {String} [set] the configuration set these defaults are in.  Currently not supported.
+   * @param {Object} data extra configuration data to merge with the current defaults.
+   * @throws {TypeError} if given improper arguments
+   * @throws {NotImplementedError} if `set` isn't `"default"`.
+   * @return {ModuleConfiguration} the current configuration object.  Useful for chaining.
+  */
+  defaults(set, data) {
+    if(!data) { [set, data] = ["default", set]; }
+    if(data === null || typeof data !== "object") {
+      throw new TypeError(`Must be given an object.  Given ${typeof data}`);
+    }
+    if(set === "default") {
+      this._defaults = merge({}, this._defaults, data);
+    }
+    else {
+      throw NotImplementedError(`'set' must be '"default"'.  Given '${set}'.`);
+    }
+    return this;
+  }
+
+  /**
+   * Update this module's overridden options, which are merged into the configuration after applying a runtime object.
+   * @param {String} [set] the configuration set these override properties are in.  Currently not supported.
+   * @param {Object} data extra configuration data to merge with the current override data.
+   * @throws {TypeError} if given improper arguments
+   * @throws {NotImplementedError} if `set` isn't `"default"`.
+   * @return {ModuleConfiguration} the current configuration object.  Useful for chaining.
+  */
+  set(set, data) {
+    if(!data) { [set, data] = ["default", set]; }
+    if(data === null || typeof data !== "object") {
+      throw new TypeError(`Must be given an object.  Given ${typeof data}`);
+    }
+    if(set === "default") {
+      this._defaults._set = merge({}, this._defaults._set, data);
+    }
+    else {
+      throw NotImplementedError(`'set' must be '"default"'.  Given '${set}'.`);
+    }
+    return this;
+  }
+
+  /**
    * Produce the final configuration for this module.  Doesn't have side effects, and can be called multiple times.
    * @param {Object} [obj] an optional set of run-time options that can override the defaults.
    * @return {Object} the final configuration, with all defaults and overrides merged in.
   */
   use(obj) {
-    return merge({}, this._defaults, obj);
+    return this.constructor.removeInternal(merge(...[
+      {},
+      this._defaults,
+      obj,
+      this.constructor.removeInternal(this._defaults._set),
+    ]));
+  }
+
+  /**
+   * Removes keys used by {@link ModuleConfiguration} used to store internal data from module configuration objects.
+   * Mutates the given object.
+   * @param {Object} conf the configuration object to mutate.
+   * @return {Object} the given configuration object after deleting internal keys.
+   * @throws {TypeError} if not given an object.
+  */
+  static removeInternal(obj) {
+    if(typeof obj !== "object" || Array.isArray(obj)) {
+      throw new TypeError(`Must be given an object.  Given '${typeof obj}'`);
+    }
+    delete obj._set;
+    return obj;
   }
 
 }
