@@ -1,4 +1,20 @@
 = `modconf` Documentation
 Ryan Leonard <ryan@codelenny.com>
+:modconf: pass:q[`modconf`]
+:node: https://nodejs.org/[Node.js]
+:lodashmerge: pass:q[https://www.npmjs.com/package/lodash.merge[`lodash.merge`]]
+:jsdoc: http://usejsdoc.org/[JSDoc]
 
 A configuration library that works well with modular libraries.
+
+== Introduction
+
+{modconf} provides a high-level configuration system for {node} libraries, with a minimalistic API that enables many
+different use cases.
+
+{modconf} follows a common {node} configuration pattern: libraries take in a configuration object, which is merged with
+a set of defaults, which is often implemented with a low-level object merging function, like {lodashmerge}.
+Often libraries will expose options of sub-libraries under their own configuration.
+This is great for users who want control over deep libraries, but the data structures can get large and bloated.
+
+{modconf} supports an alternative flow: users can set defaults to be evaluated anywhere the library is used.
