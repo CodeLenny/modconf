@@ -4,6 +4,11 @@ set -e
 PUBLIC_SURGE_USERNAME=$(echo -n "$SURGE_LOGIN" | sed "s/^[^@]*/${SURGE_LOGIN:0:1}***/")
 LAST_COMMIT="$(git log -1 --pretty=%B)"
 
+if $TRAVIS_PULL_REQUEST; then
+  echo "Not deploying docs from a pull request.  Aborting deployment."
+  exit 0;
+fi
+
 if $CI && [[ "$TRAVIS_BRANCH" != "master" ]] && [[ "$LAST_COMMIT" != *"[deploy]"* ]]; then
   echo "Not on 'master'.  Aborting deployment."
   echo "  Add '[deploy]' to the commit message to override deployment check."
