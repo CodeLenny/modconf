@@ -1,0 +1,4 @@
+= `modconf` Documentation
+Ryan Leonard <ryan@codelenny.com>
+
+A configuration library that works well with modular libraries.
