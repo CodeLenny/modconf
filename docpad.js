@@ -23,9 +23,7 @@ module.exports = {
     noRender: function() {
       return this
         .getCollection("documents")
-        .findAllLive({ outFilename: { $in: [
-          "README.adoc",
-        ]}})
+        .findAllLive({ outExtension: "adoc" })
         .on("add", (model) => model.setMetaDefaults({
           render: false,
           outFilename: model.attributes.filename,
