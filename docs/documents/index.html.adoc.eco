@@ -1,0 +1,4 @@
+---
+title: modconf Documentation
+---
+<%- @include("README.adoc") %>
