@@ -4,6 +4,7 @@ Ryan Leonard <ryan@codelenny.com>
 :node: https://nodejs.org/[Node.js]
 :lodashmerge: pass:q[https://www.npmjs.com/package/lodash.merge[`lodash.merge`]]
 :jsdoc: http://usejsdoc.org/[JSDoc]
+:sectanchors:
 
 A configuration library that works well with modular libraries.
 
@@ -18,3 +19,34 @@ Often libraries will expose options of sub-libraries under their own configurati
 This is great for users who want control over deep libraries, but the data structures can get large and bloated.
 
 {modconf} supports an alternative flow: users can set defaults to be evaluated anywhere the library is used.
+
+See <<library-guide>> and <<user-guide>> for usage.
+
+[[ref]]
+== {modconf} Reference
+
+=== Dictionary
+
+[[dict-module,module]]
+module::
+  A program or library that has it's own configuration.
+
+[[library-guide]]
+== {modconf} for Library Developers
+
+=== Installation
+
+Install {modconf} via NPM:
+
+[source,bash]
+.Installation
+----
+npm install --save modconf
+----
+
+=== Options Definition
+
+{modconf} is organized around a common configuration definition.
+
+[[user-guide]]
+== {modconf} for End Users
