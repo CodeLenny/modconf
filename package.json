@@ -1,6 +1,6 @@
 {
   "name": "modconf",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Configuration, modularized.",
   "main": "ModConf.js",
   "scripts": {
