@@ -33,6 +33,24 @@ class ModuleConfiguration {
    * @throws {RangeError} if given too many parameters, or too many parameters of one type.
    * @throws {TypeError} if given an unknown parameter type.
    * @return {ModuleConfiguration} the current configuration object.  Useful for chaining.
+   * @example <caption>Minimal Option Definition</caption>
+   * conf
+   *   .option("hostname")
+   *   .option("domain");
+   * @example <caption>Type Definition</caption>
+   * conf.option(String, "hostname");
+   * @example <caption>Defining default value</caption>
+   * conf.option(Boolean, "registered", {
+   *   default: false,
+   * });
+   * @example <caption>Providing Additional Options</caption>
+   * conf.option("hostname", {
+   *   description: "The hostname for the machine",
+   *   example: "server-1",
+   *   required: true,
+   * });
+   * @example <caption>Providing arguments in arbitrary order</caption>
+   * conf.option("domain", { required: true }, String);
   */
   option(...args) {
     if(args.length > 3) {
