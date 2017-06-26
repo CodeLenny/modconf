@@ -6,7 +6,6 @@ module.exports = {
 
   documentPaths: [
     "documents",
-    "README.adoc",
   ],
 
   collections: {
