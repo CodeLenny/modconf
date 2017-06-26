@@ -32,7 +32,7 @@ module::
   A program or library that has it's own configuration.
 
 [[library-guide]]
-== {modconf} for Library Developers
+== {modconf} for Library Authors
 
 === Installation
 
