@@ -1,0 +1,15 @@
+html
+  head
+    title #{document.title}
+    != getBlock("styles").toHTML()
+    link(rel="stylesheet", href="https://cdn.rawgit.com/asciidoctor/asciidoctor-stylesheet-factory/e9d67feb74c4aa23948632da524b6cf8e75aeeb2/stylesheets/github.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css")
+  body
+    #content
+      h1 #{document.title}
+      != content
+    != getBlock("scripts").toHTML()
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/yaml.min.js")
+    script
+      | hljs.initHighlightingOnLoad()

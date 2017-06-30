@@ -11,3 +11,4 @@ install:
 after_success:
   - $(npm bin)/nyc report --reporter=lcovonly
   - $(npm bin)/codecov
+  - ./docs/publish.sh

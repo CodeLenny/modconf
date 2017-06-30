@@ -4,7 +4,10 @@
   "description": "Configuration, modularized.",
   "main": "ModConf.js",
   "scripts": {
-    "test": "NODE_PATH=. nyc --reporter=html --reporter=text ava"
+    "test": "NODE_PATH=. nyc --reporter=html --reporter=text ava",
+    "docs": "npm-run-all jsdoc docpad",
+    "jsdoc": "jsdoc -c docs/jsdoc.json",
+    "docpad": "docpad-server --action generate"
   },
   "nyc": {
     "exclude": [
@@ -24,7 +27,14 @@
   "homepage": "https://github.com/CodeLenny/modconf#readme",
   "devDependencies": {
     "ava": "^0.19.1",
+    "docdash": "^0.4.0",
+    "docpad": "^6.79.4",
+    "docpad-plugin-asciidoc": "^2.2.0",
+    "docpad-plugin-eco": "^2.2.1",
+    "docpad-plugin-pug": "^2.1.0",
+    "jsdoc": "^3.4.3",
     "jsverify": "^0.8.2",
+    "npm-run-all": "^4.0.2",
     "nyc": "^11.0.2"
   },
   "dependencies": {
